@@ -17,7 +17,7 @@ default: $(GIT_HOOKS) computepi.o
 	$(CC) $(CFLAGS) computepi.o time_test.c -DOPENMP_4 -o time_test_openmp_4
 	$(CC) $(CFLAGS) computepi.o time_test.c -DAVX -o time_test_avx
 	$(CC) $(CFLAGS) computepi.o time_test.c -DAVXUNROLL -o time_test_avxunroll
-	$(CC) $(CFLAGS) computepi.o benchmark_clock_gettime.c -o benchmark_clock_gettime
+	$(CC) $(CFLAGS) computepi.o benchmark_clock_gettime.c -lm -o benchmark_clock_gettime
 
 .PHONY: clean default
 

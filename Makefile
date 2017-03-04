@@ -19,6 +19,7 @@ default: $(GIT_HOOKS) computepi.o
 	$(CC) $(CFLAGS) computepi.o time_test.c -DAVXUNROLL -o time_test_avxunroll
 	$(CC) $(CFLAGS) computepi.o benchmark_clock_gettime.c -lm -o benchmark_clock_gettime
 	$(CC) $(CFLAGS) computepi.o thread_benchmark.c -lm -o thread_benchmark
+	$(CC) $(CFLAGS) computepi.o error.c -o error
 
 .PHONY: clean default
 
@@ -43,6 +44,13 @@ thread: default
 		./thread_benchmark $$i; \
 	done > thread_result.csv; \
 	gnuplot scripts/thread_bench.gp 
+
+error: default
+	for i in `seq 100 100 25000`; do \
+		printf "%d " $$i;\
+		./error $$i; \
+	done > error.csv
+	gnuplot scripts/error.gp
 
 clean:
 	rm -f $(EXECUTABLE) *.o *.s result_clock_gettime.csv thread_result.csv

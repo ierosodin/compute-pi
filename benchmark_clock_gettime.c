@@ -15,7 +15,7 @@ int main(int argc, char const *argv[])
     if (argc < 2) return -1;
 
     int N = atoi(argv[1]);
-    int i, loop = 25, num;
+    int i, loop = 100, num;
 
     double data[loop];
     double sum_d = 0.0, sum_p = 0.0, average = 0.0, s = 0.0;
@@ -37,7 +37,7 @@ int main(int argc, char const *argv[])
     sum_d = 0.0, num = loop;
 
     for (i = 0; i < loop; i++) {
-        if (data[i] > average - 1.96*s && data[i] < average + 1.96*s)
+        if (data[i] > average - 1.645*s && data[i] < average + 1.645*s)
             sum_d += data[i];
         else
             num--;
@@ -62,7 +62,7 @@ int main(int argc, char const *argv[])
     sum_d = 0.0, num = loop;
 
     for (i = 0; i < loop; i++) {
-        if (data[i] > average - 1.96*s && data[i] < average + 1.96*s)
+        if (data[i] > average - 1.645*s && data[i] < average + 1.645*s)
             sum_d += data[i];
         else
             num--;
@@ -87,7 +87,7 @@ int main(int argc, char const *argv[])
     sum_d = 0.0, num = loop;
 
     for (i = 0; i < loop; i++) {
-        if (data[i] > average - 1.96*s && data[i] < average + 1.96*s)
+        if (data[i] > average - 1.645*s && data[i] < average + 1.645*s)
             sum_d += data[i];
         else
             num--;
@@ -112,7 +112,7 @@ int main(int argc, char const *argv[])
     sum_d = 0.0, num = loop;
 
     for (i = 0; i < loop; i++) {
-        if (data[i] > average - 1.96*s && data[i] < average + 1.96*s)
+        if (data[i] > average - 1.645*s && data[i] < average + 1.645*s)
             sum_d += data[i];
         else
             num--;
@@ -137,7 +137,7 @@ int main(int argc, char const *argv[])
     sum_d = 0.0, num = loop;
 
     for (i = 0; i < loop; i++) {
-        if (data[i] > average - 1.96*s && data[i] < average + 1.96*s)
+        if (data[i] > average - 1.645*s && data[i] < average + 1.645*s)
             sum_d += data[i];
         else
             num--;

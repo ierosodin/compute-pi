@@ -115,5 +115,66 @@ double compute_pi_avx_unroll(size_t N)
           tmp2[0] + tmp2[1] + tmp2[2] + tmp2[3] +
           tmp3[0] + tmp3[1] + tmp3[2] + tmp3[3] +
           tmp4[0] + tmp4[1] + tmp4[2] + tmp4[3];
+
+    ymm6 = _mm256_setzero_pd();
+    ymm7 = _mm256_setzero_pd();
+    ymm8 = _mm256_setzero_pd();
+    ymm9 = _mm256_setzero_pd();
+
+    ymm2 = _mm256_set_pd((N-4) * dt, (N-3) * dt, (N-2) * dt, (N-1) * dt);
+    ymm3 = _mm256_set_pd((N-8) * dt, (N-7) * dt, (N-6) * dt, (N-5) * dt);
+    ymm4 = _mm256_set_pd((N-12) * dt, (N-11) * dt, (N-10) * dt, (N-9) * dt);
+    ymm5 = _mm256_set_pd(0.0, (N-15) * dt, (N-14) * dt, (N-13) * dt);
+
+    ymm10 = _mm256_mul_pd(ymm2, ymm2);
+    ymm11 = _mm256_mul_pd(ymm3, ymm3);
+    ymm12 = _mm256_mul_pd(ymm4, ymm4);
+    ymm13 = _mm256_mul_pd(ymm5, ymm5);
+
+    ymm10 = _mm256_add_pd(ymm0, ymm10);
+    ymm11 = _mm256_add_pd(ymm0, ymm11);
+    ymm12 = _mm256_add_pd(ymm0, ymm12);
+    ymm13 = _mm256_add_pd(ymm0, ymm13);
+
+    ymm10 = _mm256_div_pd(ymm1, ymm10);
+    ymm11 = _mm256_div_pd(ymm1, ymm11);
+    ymm12 = _mm256_div_pd(ymm1, ymm12);
+    ymm13 = _mm256_div_pd(ymm1, ymm13);
+
+    ymm6 = _mm256_add_pd(ymm6, ymm10);
+    ymm7 = _mm256_add_pd(ymm7, ymm11);
+    ymm8 = _mm256_add_pd(ymm8, ymm12);
+    ymm9 = _mm256_add_pd(ymm9, ymm13);
+
+    double tmp7[4] __attribute__((aligned(32)));
+    double tmp8[4] __attribute__((aligned(32)));
+    double tmp9[4] __attribute__((aligned(32)));
+    double tmp10[4] __attribute__((aligned(32)));
+
+    _mm256_store_pd(tmp7, ymm6);
+    _mm256_store_pd(tmp8, ymm7);
+    _mm256_store_pd(tmp9, ymm8);
+    _mm256_store_pd(tmp10, ymm9);
+
+    if (N%16 != 0)
+        if (N%16 <= 4)
+            for (int k = 0; k < N%16; k++)
+                pi += tmp7[k];
+        else if (N%16 <= 8) {
+            pi += tmp7[0] + tmp7[1] + tmp7[2] + tmp7[3];
+            for (int k = 0;  k < N%16 - 4; k++)
+                pi += tmp8[k];
+        } else if (N%16 <= 12) {
+            pi += tmp7[0] + tmp7[1] + tmp7[2] + tmp7[3];
+            pi += tmp8[0] + tmp8[1] + tmp8[2] + tmp8[3];
+            for (int k = 0;  k < N%16 - 8; k++)
+                pi += tmp9[k];
+        } else if (N%16 < 16) {
+            pi += tmp7[0] + tmp7[1] + tmp7[2] + tmp7[3];
+            pi += tmp8[0] + tmp8[1] + tmp8[2] + tmp8[3];
+            pi +=+ tmp9[0] + tmp9[1] + tmp9[2] + tmp9[3];
+            for (int k = 0;  k < N%16 - 12; k++)
+                pi += tmp10[k];
+        }
     return pi * 4.0;
 }

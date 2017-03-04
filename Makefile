@@ -18,6 +18,7 @@ default: $(GIT_HOOKS) computepi.o
 	$(CC) $(CFLAGS) computepi.o time_test.c -DAVX -o time_test_avx
 	$(CC) $(CFLAGS) computepi.o time_test.c -DAVXUNROLL -o time_test_avxunroll
 	$(CC) $(CFLAGS) computepi.o benchmark_clock_gettime.c -lm -o benchmark_clock_gettime
+	$(CC) $(CFLAGS) computepi.o thread_benchmark.c -lm -o thread_benchmark
 
 .PHONY: clean default
 
@@ -37,5 +38,11 @@ gencsv: default
 		./benchmark_clock_gettime $$i; \
 	done > result_clock_gettime.csv	
 
+thread: default
+	for i in 25000; do \
+		./thread_benchmark $$i; \
+	done > thread_result.csv; \
+	gnuplot scripts/thread_bench.gp 
+
 clean:
-	rm -f $(EXECUTABLE) *.o *.s result_clock_gettime.csv
+	rm -f $(EXECUTABLE) *.o *.s result_clock_gettime.csv thread_result.csv

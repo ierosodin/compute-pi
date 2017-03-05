@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <unistd.h>
 #include "computepi.h"
 
 #define CLOCK_ID CLOCK_MONOTONIC_RAW
@@ -12,11 +13,25 @@ int main(int argc, char const *argv[])
     struct timespec start = {0, 0};
     struct timespec end = {0, 0};
 
-    if (argc < 2) return -1;
-    int N = atoi(argv[1]);
-    int chunks = 1;
-    if (argc == 3)
-        chunks = atoi(argv[2]);
+    if (argc < 2) {
+        printf("\nUsage: ./benchmark_clock_gettime -n 1024 [OPTIONS].\n");
+        printf("\nOptions:\n   -c    Argument for OpenCL to determine how many work for each work item.\n");
+        return -1;
+    }
+
+    int N = 1024, chunks = 1;
+    int args;
+
+    while (-1 != (args = getopt(argc, argv, "n:c:"))) {
+        switch (args) {
+        case 'n':
+            N = atoi(optarg);
+            break;
+        case 'c':
+            chunks = atoi(optarg);
+            break;
+        }
+    }
 
     int i, loop = 100, num;
 

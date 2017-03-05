@@ -3,7 +3,9 @@ CFLAGS = -O0 -std=gnu99 -Wall -fopenmp -mavx
 EXECUTABLE = \
 	time_test_baseline time_test_openmp_2 time_test_openmp_4 \
 	time_test_avx time_test_avxunroll \
-	benchmark_clock_gettime
+	benchmark_clock_gettime \
+	thread_benchmark \
+	error
 
 GIT_HOOKS := .git/hooks/pre-commit
 
@@ -54,4 +56,4 @@ error: default
 	gnuplot scripts/error.gp
 
 clean:
-	rm -f $(EXECUTABLE) *.o *.s result_clock_gettime.csv thread_result.csv
+	rm -f $(EXECUTABLE) *.o *.s result_clock_gettime.csv thread_result.csv *.png

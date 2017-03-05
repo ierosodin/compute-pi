@@ -35,3 +35,14 @@ double computePi_v1(size_t N)
 ## OpenCL
 
 With OpenCL, we need to add ` -l OpenCL ` when building the code.
+
+## pi kernel
+
+/*
+ * pi_kernel2.cl
+ *
+ *  Created on: 27/02/2014
+ *      Author: Diego Nieto Muñoz
+ */
+
+[OpenCL benchmark. PI calculation.](http://diegonieto.org/index.php/en/14-opencl-benchmark-pi-calculation)

@@ -5,10 +5,7 @@
  *      Author: Diego Nieto Muñoz
  */
 
-__kernel void Pi(__global float *workGroupBuffer,         // 0..NumWorkGroups-1
-				 __local float *scratch,  // 0..workGroupSize-1
-				 const uint niter,        // Total iterations
-				 const uint chunk)        // Chunk size
+__kernel void Pi(__global float *workGroupBuffer, __local float *scratch, const uint niter, const uint chunk) // NumWorkGroups, workGroupSize, Total iterations, Chunk size
 {
 	const uint lid = get_local_id(0);
 	const uint gid = get_global_id(0);

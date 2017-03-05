@@ -31,3 +31,7 @@ double computePi_v1(size_t N)
 ![](https://raw.githubusercontent.com/charles620016/embedded-fall2015/master/hw1-computePi/screenshot/Wall-clock_time.png)
 
 ![](https://raw.githubusercontent.com/charles620016/embedded-fall2015/master/hw1-computePi/screenshot/CPU_time.png)
+
+## OpenCL
+
+With OpenCL, we need to add ` -l OpenCL ` when building the code.
